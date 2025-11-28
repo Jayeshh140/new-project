@@ -13,7 +13,7 @@ WORKDIR /src/hello-world-api
 RUN dotnet publish -c Release -o /app/publish
 
 # build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:2.0
 WORKDIR /app
 COPY --from=build /app/publish ./
 
