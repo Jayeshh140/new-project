@@ -1,17 +1,13 @@
 # Build stage
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /app
+WORKDIR /src
 
-COPY hello-world-api/* ./ 
-RUN dotnet restore
+# Copy project file(s) first for better caching
+COPY hello-world-api/hello-world-api.csproj ./hello-world-api/
+RUN dotnet restore ./hello-world-api/hello-world-api.csproj
 
+# Copy the rest of the source
 COPY . .
+
+# Build and publish
 RUN dotnet publish ./hello-world-api/hello-world-api.csproj -c Release -o /app/publish
-
-# Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
-WORKDIR /app
-COPY --from=build /app/out .
-
-EXPOSE 80
-ENTRYPOINT ["dotnet", "dotnet-hello-world.dll"]
