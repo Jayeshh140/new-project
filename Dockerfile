@@ -6,7 +6,7 @@ COPY hello-world-api/* ./
 RUN dotnet restore
 
 COPY . .
-RUN dotnet publish -c Release -o out
+RUN dotnet publish hello-world-api/* -c Release -o out
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
