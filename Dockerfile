@@ -1,23 +1,17 @@
-# Use official .NET SDK image to build the app
-FROM mcr.microsoft.com/dotnet/sdk:2.0 AS build
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /app
 
-WORKDIR /src
-# copy csproj and restore first (better caching)
-COPY *.sln ./
-COPY hello-world-api/hello-world-api.csproj hello-world-api/
+COPY *.csproj ./
 RUN dotnet restore
 
-# copy everything else and build
-COPY . ./
-WORKDIR /src/hello-world-api
-RUN dotnet publish -c Release -o /app/publish
+COPY . .
+RUN dotnet publish -c Release -o out
 
-# build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:2.0
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-COPY --from=build /app/publish ./
+COPY --from=build /app/out .
 
-# (optional) expose port; change if your API runs on a different port
-EXPOSE 5000
-
-ENTRYPOINT ["dotnet", "hello-world-api.dll"]
+EXPOSE 80
+ENTRYPOINT ["dotnet", "dotnet-hello-world.dll"]
