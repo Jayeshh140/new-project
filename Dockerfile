@@ -17,7 +17,7 @@ WORKDIR /app
 COPY --from=build /app/pub .
 
 # Expose port 5000
-EXPOSE 5000
+EXPOSE 80
 ENV ASPNETCORE_URLS=http://+:5000
 
 # Run the app
