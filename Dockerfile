@@ -2,7 +2,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /app
 
-COPY src/hello-world-api.csproj ./ 
+COPY dotnet-hello-world/hello-world-api
+/hello-world-api.csproj ./ 
 RUN dotnet restore
 
 COPY . .
