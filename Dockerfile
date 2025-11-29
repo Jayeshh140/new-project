@@ -6,7 +6,7 @@ COPY hello-world-api/* ./
 RUN dotnet restore
 
 COPY . .
-RUN dotnet hello-world-api/hello-world-api/* -c Release -o out
+RUN dotnet publish ./hello-world-api/hello-world-api.csproj -c Release -o /app/publish
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
