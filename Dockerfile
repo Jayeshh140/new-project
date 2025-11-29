@@ -1,5 +1,5 @@
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:2.1 AS build
 WORKDIR /src
 
 # Copy project file(s) first for better caching
